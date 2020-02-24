@@ -12,19 +12,27 @@
 
     <!-- applicationContext.xml : DataSource, MyBatis 설정, MyBatis 로그 설정 -->
 
+    <!-- context 설정 -->
+    <context:component-scan base-package="org.example.springMVC" />
+    <context:property-placeholder location="classpath:application.properties" />
+
     <!-- DataSource default 설정 -->
     <!-- MySQL 설정 -->
     <!-- MySQL dataSource -->
     <!-- root-context.xml파일에 spring jdbc를 이용하여 datasource를 설정 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <!-- 드라이버 클래스 이름이 변경됨 -->
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="driverClassName" value="${spring.database.class}" />
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
         <!--<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />-->
         <!-- 연결문자열에 log4jdbc가 추가됨 -->
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/springDB?useSSL=false&amp;serverTimezone=UTC" />
+        <property name="url" value="${spring.database.host}" />
+        <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/springDB?useSSL=false&amp;serverTimezone=UTC" />-->
         <!--<property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/springDB?useSSL=false&amp;serverTimezone=UTC" />-->
-        <property name="username" value="spring" />
-        <property name="password" value="spring" />
+        <property name="username" value="${spring.database.username}" />
+        <!--<property name="username" value="spring" />-->
+        <property name="password" value="${spring.database.password}" />
+        <!--<property name="password" value="spring" />-->
     </bean>
 
     <!-- MyBatis 연결 설정 -->
@@ -48,8 +56,5 @@
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
-
-    <!--  -->
-    <context:component-scan base-package="org.example.springMVC" />
 
 </beans>
