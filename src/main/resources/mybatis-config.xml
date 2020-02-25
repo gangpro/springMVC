@@ -9,7 +9,7 @@
     </settings>
 
     <typeAliases>
-        <package name="org.example.springMVC" />
+        <typeAlias type="org.example.springMVC.article.vo.ArticleVO" alias="ArticleVO" />
     </typeAliases>
 
 </configuration>
