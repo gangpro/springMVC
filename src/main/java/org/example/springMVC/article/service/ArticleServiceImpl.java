@@ -49,4 +49,9 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
         return articleDAO.listCriteria(criteria);
     }
+    // 페이징 전체 게시글 갯수 처리
+    @Override
+    public int countArticles(Criteria criteria) throws Exception {
+        return articleDAO.countArticles(criteria);
+    }
 }

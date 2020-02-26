@@ -1,4 +1,16 @@
 <프로젝트 관련 쿼리>
+DROP TABLE tbl_article;
+
+CREATE TABLE tbl_article
+(article_no INT NOT NULL AUTO_INCREMENT
+,title VARCHAR(200) NOT NULL
+,content TEXT NULL
+,writer VARCHAR(50) NOT NULL
+,regdate TIMESTAMP NOT NULL DEFAULT NOW()
+,viewcnt INT DEFAULT 0
+,PRIMARY KEY (article_no)
+);
+
 CREATE TABLE tbl_article
 (	article_no	INT		        NOT NULL	AUTO_INCREMENT	-- 게시글 번호
 ,	title		VARCHAR(200)	NOT NULL			        -- 게시글 제목
@@ -136,6 +148,10 @@ SELECT
   - 현재 페이지의 시작 데이터를 가져오기 위한 계산식
     : 현재 페이지의 시작 데이터 = (현재 페이지 번호 -1) 페이지 당 출력할 데이터의 갯수
 11. 페이징 처리 컨트롤러 메서드 작성
+12. 페이징 처리를 위한 JSP 페이지 작성
+13. 목록 하단의 페이지 번호 출력을 위한 계산식 정리
+14. 페이징 처리를 위한 계산 클래스 설계
+
 
 
 

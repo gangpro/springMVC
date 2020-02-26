@@ -42,6 +42,8 @@
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="${path}/article/write"><i class="fa fa-edit"></i> <span>게시글 작성</span></a></li>
             <li><a href="${path}/article/list"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
+            <li><a href="${path}/article/listCriteria"><i class="fa fa-list"></i> <span>게시글 목록(갯수제한)</span></a></li>
+            <li><a href="${path}/article/listPaging"><i class="fa fa-list"></i> <span>게시글 목록(페이징)</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -3,6 +3,7 @@ package org.example.springMVC.article.controller;
 import org.example.springMVC.article.service.ArticleService;
 import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
+import org.example.springMVC.commons.paging.PageMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -110,7 +111,21 @@ public class ArticleController {
         return "/article/list_criteria";
     }
 
+    // 페이지 번호 출력처리가 된 목록 페이지를 처리할 메서드
+    @RequestMapping(value = "/listPaging", method = RequestMethod.GET)
+    public String listPaging(Model model, Criteria criteria) throws Exception {
+        // Criteria, Model 타입의 변수 criteria와 model을 파라미터로 사용
+        // Model 객체를 사용하여 PageMaker에서 계산한 결과 값을 저장
+        logger.info("listPaging...");
 
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(criteria);
+        pageMaker.setTotalCount(1000);  // 아직 영속계층에서 전체 게시글의 갯수를 구하는 로직을 구현하지 않았기 때문에 setTotalCount의 매개변수는 1000을 임의로 넣었다.
+        //pageMaker.setTotalCount(articleService.countArticles(criteria));
 
+        model.addAttribute("articles", articleService.listCriteria(criteria));
+        model.addAttribute("pageMaker", pageMaker);
 
+        return "/article/list_paging";
+    }
 }
