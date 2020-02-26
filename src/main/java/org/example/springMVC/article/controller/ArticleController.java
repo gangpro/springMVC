@@ -2,6 +2,7 @@ package org.example.springMVC.article.controller;
 
 import org.example.springMVC.article.service.ArticleService;
 import org.example.springMVC.article.vo.ArticleVO;
+import org.example.springMVC.commons.paging.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -100,6 +101,14 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
+    // 페이징 처리
+    @RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
+    public String listCriteria(Model model, Criteria criteria) throws Exception {
+        logger.info("listCriteria... ");
+        model.addAttribute("articles", articleService.listCriteria(criteria));
+
+        return "/article/list_criteria";
+    }
 
 
 
