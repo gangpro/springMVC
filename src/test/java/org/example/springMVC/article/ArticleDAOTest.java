@@ -26,20 +26,38 @@ public class ArticleDAOTest {
     @Inject
     private ArticleDAO articleDAO;
 
+//    // 게시글 1개 생성 테스트
+//    @Test
+//    public void testCreate() throws Exception {
+//        ArticleVO articleVO = new ArticleVO();
+//        articleVO.setTitle("제목 신규 테스트");
+//        articleVO.setContent("내용 신규 테스트");
+//        articleVO.setWriter("작성자 신규 테스트");
+//        articleDAO.create(articleVO);
+//    }
+
+    // 게시글 1000개 생성 테스트
     @Test
     public void testCreate() throws Exception {
-        ArticleVO articleVO = new ArticleVO();
-        articleVO.setTitle("제목 신규 테스트");
-        articleVO.setContent("내용 신규 테스트");
-        articleVO.setWriter("작성자 신규 테스트");
-        articleDAO.create(articleVO);
+
+        for(int i = 1; i <= 1000; i++) {
+            ArticleVO articleVO = new ArticleVO();
+            articleVO.setTitle("제목" + i);
+            articleVO.setContent("내용" + i);
+            articleVO.setWriter("작성자" + (i%10));
+
+            articleDAO.create(articleVO);
+        }
+
     }
 
+    // 게시글 조회
     @Test
     public void testRead() throws Exception {
         logger.info(articleDAO.read(1).toString());
     }
 
+    // 게시글 업데이트 테스트
     @Test
     public void testUpdate() throws Exception {
         ArticleVO articleVO = new ArticleVO();
@@ -49,9 +67,26 @@ public class ArticleDAOTest {
         articleDAO.update(articleVO);
     }
 
+    // 게시글 1개 삭제 테스트
     @Test
     public void testDelete() throws Exception {
         articleDAO.delete(1);
     }
+
+    // 페이징 처리 SQL 테스트
+    @Test
+    public void testListPaging() throws Exception {
+
+        int page = 3;
+
+        List<ArticleVO> articles = articleDAO.listPaging(page);
+
+        for(ArticleVO article : articles) {
+            logger.info(article.getArticleNo() + ":" + article.getTitle());
+        }
+
+    }
+
+
 
 }

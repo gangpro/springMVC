@@ -1,3 +1,4 @@
+<프로젝트 관련 쿼리>
 CREATE TABLE tbl_article
 (	article_no	INT		        NOT NULL	AUTO_INCREMENT	-- 게시글 번호
 ,	title		VARCHAR(200)	NOT NULL			        -- 게시글 제목
@@ -12,6 +13,8 @@ CREATE TABLE tbl_article
 <테이블 생성>
 1. 테이블 생성
 
+
+
 <DAO 계층 구현>
 - *VO
 - *DAO // 인터페이스 생성 후 메서드 정의
@@ -21,9 +24,13 @@ CREATE TABLE tbl_article
   - // 자바 객체 필드변수와 DB 컬럼명의 불일치로 인한 문제를 해결하기 위한 SQL AS 키워드 또는 resultMap 설정
 - *DAOTest
 
+
+
 <Service 계층 구현>
 - *Service // 인터페이스 생성 후 메서드 정의
 - *ServiceImpl // 구현 클래스 작성하고(@Service), 메서드를 오버라이딩
+
+
 
 <기본 게시판 CRUD URI>
 GET - /article/write - 게시글의 등록 페이지
@@ -33,6 +40,8 @@ GET - /article/read?articleNo=게시글 번호 - 게시글의 조회
 GET - /article/modify?articleNo=게시글 번호 - 게시글의 수정 페이지
 POST - /article/modify - 게시글의 수정 처리
 POST - /article/remove - 게시글의 삭제 처리
+
+
 
 <게시글의 기본 CRUD관련 Controller 작성>
 - Controller 작성
@@ -48,6 +57,75 @@ POST - /article/remove - 게시글의 삭제 처리
 
 
 
+<예외처리>
+- ControllerAdive 애너테이션을 통해 이 클래스의 객체가 컨트롤러에서 발생하는 Exception을 전문적으로 처리하는 클래스를 명시해준 것이다.
+- commonException() 메서드의 선언부에는 @ExceptionHandler 라는 애너테이션을 붙여 적절한 타입의 Exception을 처리하도록 함
+  일반 컨트롤러 클래스와 다르게 Model을 파라미터로 사용하는 것을 지원하지 않기 때문에 ModelAndView 타입을 직접 사용하는 형태로 작성해야하 한다.
+  ModelAndView는 하나의 객체에 Model 데이터와 View의 처리를 동시에 처리할 수 있는 객체이다.
+  만약 예외가 발생하게 되면 예외가 발생한 내용이 담긴 데이터를 exception에 담고, common_error.jsp에 전달하게 된다.
+
+
+
+<페이징 처리>
+1. 페이징 처리 구현 단계
+페이징 처리는 사용자에게 필요한 최소한의 데이터를 전송하기 위해 전체 데이터 중에서 일부분만을 보여주는 방식을 의미한다.
+- URI의 문자열을 조절해 원하는 페이지의 데이터가 출력되게 하는 1단계
+- 목록 페이지 하단에 페이지 번호를 보여주고, 번호를 클릭하면 해당 페이지로 이동하는 2단계
+- 목록 페이지에서 조회나 수정 작업을 한 뒤에 다시 원래의 목록 페이지로 이동할 수 있게 처리하는 3단계
+
+2. 페이징 처리의 원칙
+- 페이징 처리는 반드시 GET 방식만을 이용한다.
+- 페이징 처리가 되면 조회 화면에서 반드시 목록으로 이동할 수 있어야 한다.
+  예를 들면 게시판의 4페이지를 보다가 특정 게시물을 조회하고, 목록으로 이동할 경우 다시 4페이지로 이동할 수 있어야 한다.
+- 페이징 처리는 반드시 필요한 페이지 번호만을 제공해야한다. 만약 페이지당 10개의 게시글을 출력하고,
+  전체 데이터가 41건의 게시글이 있다면 4페이지까지 화면에 출력되어야 하며,
+  더 많은 데이터가 존재할 경우 다음, 이전과 같은 버튼이 존재해야한다.
+
+3. 더미 데이터 넣기
+- ArticleDAOTest.java 파일에서
+// 게시글 1000개 생성 테스트
+    @Test
+    public void testCreate() throws Exception {
+
+        for(int i = 1; i <= 1000; i++) {
+            ArticleVO articleVO = new ArticleVO();
+            articleVO.setTitle("제목" + i);
+            articleVO.setContent("내용" + i);
+            articleVO.setWriter("작성자" + (i%10));
+
+            articleDAO.create(articleVO);
+        }
+
+    }
+
+4. 페이징 처리를 위한 SQL : LIMIT
+DB에 따라 페이징 처리를 위한 방법은 각기 다르다
+MySQL의 경우 LIMIT을, ORACLE의 경우는 ROWNUM을 이용한다.
+
+-- MySQL
+SELECT *
+  FROM 테이블명
+ LIMIT 시작데이터, 출력할 데이터 갯수
+
+LIMIT을 사용하는 방법은 기존의 SELECT 쿼리에 LIMIT 키워드를 써주고
+첫번째는 시작데이터를 두번째는 출력할 데이터의 갯수를 써주면 된다.
+만약 게시글을 10건씩 출력하고, 첫 번째 페이지를 출력하고 싶다면 아래와 같이 쿼리를 작성하면 된다.
+
+SELECT
+       article_no
+     , title
+     , content
+     , writer
+     , regdate
+     , viewcnt
+  FROM tbl_article
+ WHERE article_no > 0
+ ORDER BY article_no DESC, regdate DESC
+ LIMIT 0, 10;
+
+5. 페이징 처리를 위한 DAO 계층 구현
+6. 페이징 처리 SQL 테스트
+7. 페이징 처리를 도와줄 Crieria 클래스 작성
 
 
 
