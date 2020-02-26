@@ -2,6 +2,7 @@ package org.example.springMVC.article.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.example.springMVC.article.vo.ArticleVO;
+import org.example.springMVC.commons.paging.Criteria;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
@@ -46,6 +47,7 @@ public class ArticleDAOImpl implements ArticleDAO {
         return sqlSession.selectList(NAMESPACE + ".listAll");
     }
 
+    // 페이징 처리 구현 클래스
     @Override
     public List<ArticleVO> listPaging(int page) throws Exception {
 
@@ -57,4 +59,12 @@ public class ArticleDAOImpl implements ArticleDAO {
 
         return sqlSession.selectList(NAMESPACE + ".listPaging", page);
     }
+
+    // 페이징 처리 + Criteria 타입의 변수 구현 클래스
+    @Override
+    public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listCriteria", criteria);
+    }
+
+
 }

@@ -2,6 +2,7 @@ package org.example.springMVC.article;
 
 import org.example.springMVC.article.dao.ArticleDAO;
 import org.example.springMVC.article.vo.ArticleVO;
+import org.example.springMVC.commons.paging.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -87,6 +88,20 @@ public class ArticleDAOTest {
 
     }
 
+    // 페이징 처리 + Criteria 구현 SQL 테스트
+    @Test
+    public void testListCriteria() throws Exception {
+        Criteria criteria = new Criteria();
+
+        criteria.setPage(3);
+        criteria.setPerPageNum(20);
+
+        List<ArticleVO> articles = articleDAO.listCriteria(criteria);
+
+        for(ArticleVO article : articles) {
+            logger.info(article.getArticleNo() + " : " + article.getTitle());
+        }
+    }
 
 
 }

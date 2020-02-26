@@ -1,6 +1,7 @@
 package org.example.springMVC.article.dao;
 
 import org.example.springMVC.article.vo.ArticleVO;
+import org.example.springMVC.commons.paging.Criteria;
 
 import java.util.List;
 // 인터페이스 생성 후 메서드 정의
@@ -23,4 +24,7 @@ public interface ArticleDAO {
 
     // 페이징 처리
     List<ArticleVO> listPaging(int page) throws Exception;
+
+    // 페이징 처리(매개변수를 Criteria 타입의 변수를 가진 게시글 페이징 목록 메서드를 인터페이스에 선언)
+    List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 }
