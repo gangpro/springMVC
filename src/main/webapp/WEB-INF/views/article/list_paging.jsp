@@ -123,12 +123,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- modelAttribute 값 가져오기
         ArticleContorller 단에서 model.addAttribute("article", articleService.listAll());
         -->
-<script type="text/javascript">
-    var OK1 = "${articles}";
-    alert(OK1);
-    var OK2 = "${pageMaker}";
-    alert(OK2);
-</script>
+<%--<script type="text/javascript">--%>
+<%--    var OK1 = "${articles}";--%>
+<%--    alert(OK1);--%>
+<%--    var OK2 = "${pageMaker}";--%>
+<%--    alert(OK2);--%>
+<%--</script>--%>
 <script>
     var result = "${msg}";
     if (result == "regSuccess") {
