@@ -120,8 +120,8 @@ public class ArticleController {
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(criteria);
-        pageMaker.setTotalCount(1000);  // 아직 영속계층에서 전체 게시글의 갯수를 구하는 로직을 구현하지 않았기 때문에 setTotalCount 의 매개변수는 1000을 임의로 넣었다.
-        //pageMaker.setTotalCount(articleService.countArticles(criteria));
+//        pageMaker.setTotalCount(1000);  // 아직 영속계층에서 전체 게시글의 갯수를 구하는 로직을 구현하지 않았기 때문에 setTotalCount 의 매개변수는 1000을 임의로 넣었다.
+        pageMaker.setTotalCount(articleService.countArticles(criteria));
 
         model.addAttribute("articles", articleService.listCriteria(criteria));
         model.addAttribute("pageMaker", pageMaker);

@@ -103,5 +103,41 @@ public class ArticleDAOTest {
         }
     }
 
+    // 페이지 URI test1
+    @Test
+    public void testURI() throws Exception {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .path("/article/read")
+                .queryParam("articleNo", 12)
+                .queryParam("perPageNum", 20)
+                .build();
+
+        logger.info("/article/read?articleNo=12&perPageNum=20");
+        logger.info(uriComponents.toString());
+    }
+    // 테스트 실행 후
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - /article/read?articleNo=12&perPageNum=20
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - /article/read?articleNo=12&perPageNum=20
+    // UriComponents 클래스를 통해 path 나 query 에 해당하는
+    // 문자열을 추가해서 원하는 URI 를 생성할 수가 있다.
+
+    // 페이지 URI test2
+    @Test
+    public void testURI2() throws Exception {
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .path("/{module}/{page}")
+                .queryParam("articleNo", 12)
+                .queryParam("perPageNum", 20)
+                .build()
+                .expand("article", "read")
+                .encode();
+
+        logger.info("/article/read?articleNo=12&perPageNum=20");
+        logger.info(uriComponents.toString());
+        System.out.println(uriComponents);
+    }
+    // 테스트 실행 후 testURI1 과 동일한 값을 얻을 수 있다.
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - /article/read?articleNo=12&perPageNum=20
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - /article/read?articleNo=12&perPageNum=20
 
 }
