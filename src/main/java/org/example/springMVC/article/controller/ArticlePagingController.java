@@ -37,7 +37,7 @@ public class ArticlePagingController {
     public String writeGET() {
         logger.info("paging writeGET()...");
 
-        return "article/paging/write";
+        return "article/paging/write_paging";
     }
 
     // 등록
@@ -51,7 +51,7 @@ public class ArticlePagingController {
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
-        return "redirect:/article/paging/list";
+        return "redirect:/article/paging/list_paging";
     }
 
     // 목록
@@ -69,7 +69,7 @@ public class ArticlePagingController {
         model.addAttribute("article", articleService.listCriteria(criteria));
         model.addAttribute("pageMaker", pageMaker);
 
-        return "article/paging/list";
+        return "article/paging/list_paging";
     }
 
     // 조회
@@ -82,7 +82,7 @@ public class ArticlePagingController {
         logger.info("paging read()...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "article/paging/read";
+        return "article/paging/read_paging";
     }
 
     // 수정
@@ -96,7 +96,7 @@ public class ArticlePagingController {
         logger.info("paging modifyGet()...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "article/paging/modify";
+        return "article/paging/modify_pagingy";
     }
 
     // 수정
@@ -113,7 +113,7 @@ public class ArticlePagingController {
         redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "redirect:/article/paging/list";
+        return "redirect:/article/paging/list_paging";
     }
 
     // 삭제
@@ -129,7 +129,7 @@ public class ArticlePagingController {
         redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
-        return "redirect:/article/paging/list";
+        return "redirect:/article/paging/list_paging";
     }
 
 }
