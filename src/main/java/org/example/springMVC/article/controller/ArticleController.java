@@ -20,7 +20,7 @@ import javax.inject.Inject;
 @RequestMapping("/article")
 public class ArticleController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OriginalArticleController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
     private final ArticleService articleService;
 
@@ -98,7 +98,7 @@ public class ArticleController {
         articleService.update(articleVO);
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "redirect:/article/list";
+        return "article/normal/list";
     }
 
     // 삭제
@@ -108,7 +108,7 @@ public class ArticleController {
         articleService.delete(articleNo);
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
-        return "redirect:/article/list";
+        return "article/normal/list";
     }
 
 }
