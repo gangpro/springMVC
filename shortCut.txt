@@ -1,0 +1,10 @@
+자동완성(Autocomplete)
+sout -> System.out.println();
+so   -> System.out.printf("");
+psvm -> public static void main(String args[]){}
+fori -> for (int i = 0; i < ; i++) {}
+
+ctrl + opt + r : Run
+ctrl + opt + d : Debug
+ctrl + opt + i : 줄 단위 정렬
+cmd + opt + l : 코드 정렬
