@@ -29,39 +29,35 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
-    // 등록
-    // 등록 페이지 이동
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String writeGET() {
-        logger.info("write GET...");
+
+        logger.info("normal writeGET() called...");
 
         return "article/normal/write";
     }
 
-    // 등록
-    // 등록 처리
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String writePOST(ArticleVO articleVO, RedirectAttributes redirectAttributes) throws Exception {
-        logger.info("write POST...");
-        logger.info(articleVO.toString());
+    public String writePOST(ArticleVO articleVO,
+                            RedirectAttributes redirectAttributes) throws Exception {
 
+        logger.info("normal writePOST() called...");
+        logger.info(articleVO.toString());
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
         return "redirect:/article/normal/list";
     }
 
-    // 목록
-    // 목록 페이지 이동
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) throws Exception {
-        logger.info("list...");
-        model.addAttribute("article", articleService.listAll());
+
+        logger.info("normal list() called ...");
+        model.addAttribute("articles", articleService.listAll());
 
         return "article/normal/list";
     }
 
-    // 목ㄹ고
     @RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
     public String listCriteria(Model model, Criteria criteria) throws Exception {
         logger.info("normal listCriteria() ...");
@@ -69,20 +65,19 @@ public class ArticleController {
         return "article/normal/list_criteria";
     }
 
-    // 조회
-    // 조회 페이지 이동
     @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam("articleNo") int articleNo, Model model) throws Exception {
-        logger.info("read...");
+    public String read(@RequestParam("articleNo") int articleNo,
+                       Model model) throws Exception {
+
+        logger.info("normal read() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/normal/read";
     }
 
-    // 수정
-    // 수정 페이지 이동
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGET(@RequestParam("articleNo") int articleNo, Model model) throws Exception {
+    public String modifyGET(@RequestParam("articleNo") int articleNo,
+                            Model model) throws Exception {
 
         logger.info("normal modifyGet() called ...");
         model.addAttribute("article", articleService.read(articleNo));
@@ -90,25 +85,26 @@ public class ArticleController {
         return "article/normal/modify";
     }
 
-    // 수정
-    // 수정 처리
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modifyPOST(ArticleVO articleVO, RedirectAttributes redirectAttributes) throws Exception {
-        logger.info("modifyPOST...");
+    public String modifyPOST(ArticleVO articleVO,
+                             RedirectAttributes redirectAttributes) throws Exception {
+
+        logger.info("normal modifyPOST() called ...");
         articleService.update(articleVO);
         redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-        return "article/normal/list";
+        return "redirect:/article/list";
     }
 
-    // 삭제
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String remove(@RequestParam("articleNo") int articleNo, RedirectAttributes redirectAttributes) throws Exception {
-        logger.info("remove...");
+    public String remove(@RequestParam("articleNo") int articleNo,
+                         RedirectAttributes redirectAttributes) throws Exception {
+
+        logger.info("normal remove() ...");
         articleService.delete(articleNo);
         redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
-        return "article/normal/list";
+        return "redirect:/article/list";
     }
 
 }

@@ -31,22 +31,20 @@ public class ArticlePagingController {
         this.articleService = articleService;
     }
 
-    // 등록
-    // 등록 페이지 이동
+
     @RequestMapping(value = "/write", method = RequestMethod.GET)
     public String writeGET() {
-        logger.info("paging writeGET()...");
+
+        logger.info("paging writeGET() called...");
 
         return "article/paging/write";
     }
 
-    // 등록
-    // 등록 처리
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public String writePOST(ArticleVO articleVO,
                             RedirectAttributes redirectAttributes) throws Exception {
-        logger.info("paging writePOST()...");
-        logger.info(articleVO.toString());
+
+        logger.info("paging writePOST() called...");
 
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
@@ -54,60 +52,49 @@ public class ArticlePagingController {
         return "redirect:/article/paging/list";
     }
 
-    // 목록
-    // 목록 페이지 이동
-    // 페이징 처리
-    // 페이지 번호 출력처리가 된 목록 페이지를 처리할 메서드
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model, Criteria criteria) throws Exception {
-        logger.info("paging list()...");
+
+        logger.info("paging list() called ...");
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(criteria);
         pageMaker.setTotalCount(articleService.countArticles(criteria));
 
-        model.addAttribute("article", articleService.listCriteria(criteria));
+        model.addAttribute("articles", articleService.listCriteria(criteria));
         model.addAttribute("pageMaker", pageMaker);
 
         return "article/paging/list";
     }
 
-    // 조회
-    // 조회 페이지 이동
-    // 조회(개선: 목록 페이지 정보 유지)
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("articleNo") int articleNo,
                        @ModelAttribute("criteria") Criteria criteria,
                        Model model) throws Exception {
-        logger.info("paging read()...");
+
+        logger.info("paging read() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/paging/read";
     }
 
-    // 수정
-    // 수정 페이지 이동
-    // 수정 페이지 이동(개선: 목록 페이지 정보 유지)
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
     public String modifyGET(@RequestParam("articleNo") int articleNo,
                             @ModelAttribute("criteria") Criteria criteria,
                             Model model) throws Exception {
 
-        logger.info("paging modifyGet()...");
+        logger.info("paging modifyGet() called ...");
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/paging/modify";
     }
 
-    // 수정
-    // 수정 처리
-    // 수정 페이지 처리(개선: 목록 페이지 정보 유지)
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String modifyPOST(ArticleVO articleVO,
                              Criteria criteria,
                              RedirectAttributes redirectAttributes) throws Exception {
-        logger.info("paging modifyPOST()...");
 
+        logger.info("paging modifyPOST() called ...");
         articleService.update(articleVO);
         redirectAttributes.addAttribute("page", criteria.getPage());
         redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
@@ -116,14 +103,12 @@ public class ArticlePagingController {
         return "redirect:/article/paging/list";
     }
 
-    // 삭제
-    // 삭제(개선: 목록 페이지 정보 유지)
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String remove(@RequestParam("articleNo") int articleNo,
                          Criteria criteria,
                          RedirectAttributes redirectAttributes) throws Exception {
-        logger.info("paging remove()...");
 
+        logger.info("paging remove() called ...");
         articleService.delete(articleNo);
         redirectAttributes.addAttribute("page", criteria.getPage());
         redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
