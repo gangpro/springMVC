@@ -46,7 +46,7 @@ public class ArticleController {
         articleService.create(articleVO);
         redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
-        return "redirect:/article/normal/list";
+        return "redirect:/article/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
