@@ -5,16 +5,18 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
-<%@include file="../../include/head.jsp" %>
+
+<%@ include file="../../include/head.jsp"%>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
+
 <div class="wrapper">
 
     <!-- Main Header -->
-    <%@include file="../../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp"%>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <%@include file="../../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp"%>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -22,34 +24,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="content-header">
             <h1>
                 게시판
-                <small>수정페이지</small>
+                <small>수정페이지(페이징)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-edit"></i> article</li>
-                <li class="active"><a href="${path}/article/write"> modify</a></li>
+                <li class="active"><a href="${path}/article/modifyPaging"> modify</a></li>
             </ol>
         </section>
 
         <!-- Main content -->
         <section class="content container-fluid">
 
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
             <div class="col-lg-12">
-                <form role="form" id="writeForm" method="post" action="${path}/article/modify">
+                <form role="form" id="modifyForm" method="post" action="${path}/article/paging/modify">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 수정</h3>
                         </div>
                         <div class="box-body">
+
                             <input type="hidden" name="articleNo" value="${article.articleNo}">
                             <input type="hidden" name="page" value="${criteria.page}">
                             <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+
                             <div class="form-group">
                                 <label for="title">제목</label>
-                                <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요"
-                                       value="${article.title}">
+                                <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${article.title}">
                             </div>
                             <div class="form-group">
                                 <label for="content">내용</label>
@@ -58,23 +58,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <div class="form-group">
                                 <label for="writer">작성자</label>
-                                <input class="form-control" id="writer" name="writer" value="${article.writer}"
-                                       readonly>
+                                <input class="form-control" id="writer" name="writer" value="${article.writer}" readonly>
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
+                            <button type="button" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                             <div class="pull-right">
-                                <button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소
-                                </button>
-                                <button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장
-                                </button>
+                                <button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소</button>
+                                <button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장</button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-
 
         </section>
         <!-- /.content -->
@@ -82,11 +78,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <%@include file="../../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp"%>
 
 </div>
 <!-- ./wrapper -->
-<%@include file="../../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp"%>
 <script>
     $(document).ready(function () {
         var formObj = $("form[role='form']");
@@ -98,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             history.go(-1);
         });
         $(".listBtn").on("click", function () {
-            self.location = "/article/listPaging?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
+            self.location = "/article/paging/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
         });
     });
 </script>
