@@ -57,6 +57,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="box-footer">
                         <form role="form" method="post">
                             <input type="hidden" name="articleNo" value="${article.articleNo}">
+                            <input type="hidden" name="page" value="${criteria.page}">
+                            <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
                         </form>
                         <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                         <div class="pull-right">
@@ -83,17 +85,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
     $(document).ready(function () {
         var formObj = $("form[role='form']");
         console.log(formObj);
+
         $(".modBtn").on("click", function () {
-            formObj.attr("action", "/article/modify");
+            formObj.attr("action", "/article/modifyPaging");
             formObj.attr("method", "get");
             formObj.submit();
         });
         $(".delBtn").on("click", function () {
-            formObj.attr("action", "/article/remove");
+            formObj.attr("action", "/article/removePaging");
             formObj.submit();
         });
         $(".listBtn").on("click", function () {
-            self.location = "/article/list"
+            formObj.attr("method", "get");
+            formObj.attr("action", "/article/listPaging");
+            formObj.submit();
         });
     });
 </script>

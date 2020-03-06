@@ -37,7 +37,7 @@ public class ArticlePagingController {
     public String writeGET() {
         logger.info("paging writeGET()...");
 
-        return "/article/paging/write";
+        return "article/paging/write";
     }
 
     // 등록
@@ -69,7 +69,7 @@ public class ArticlePagingController {
         model.addAttribute("article", articleService.listCriteria(criteria));
         model.addAttribute("pageMaker", pageMaker);
 
-        return "/article/paging/list";
+        return "article/paging/list";
     }
 
     // 조회
@@ -82,7 +82,7 @@ public class ArticlePagingController {
         logger.info("paging read()...");
         model.addAttribute("article", articleService.read(articleNo));
 
-        return "/article/paging/read";
+        return "article/paging/read";
     }
 
     // 수정
