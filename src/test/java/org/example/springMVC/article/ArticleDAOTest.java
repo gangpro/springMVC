@@ -3,6 +3,7 @@ package org.example.springMVC.article;
 import org.example.springMVC.article.dao.ArticleDAO;
 import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
+import org.example.springMVC.commons.paging.SearchCriteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -139,5 +140,31 @@ public class ArticleDAOTest {
     // 테스트 실행 후 testURI1 과 동일한 값을 얻을 수 있다.
     //= INFO : org.example.springMVC.article.ArticleDAOTest - /article/read?articleNo=12&perPageNum=20
     //= INFO : org.example.springMVC.article.ArticleDAOTest - /article/read?articleNo=12&perPageNum=20
+
+    // 검색 관련 동적 SQL 테스트
+    @Test
+    public void testDynamic1() throws Exception {
+
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setPage(1);
+        searchCriteria.setKeyword("999");
+        searchCriteria.setSearchType("t");
+
+        logger.info("======================");
+
+        List<ArticleVO> articles = articleDAO.listSearch(searchCriteria);
+
+        for (ArticleVO article : articles) {
+            logger.info(article.getArticleNo() + " : " + article.getTitle());
+        }
+
+        logger.info("======================");
+
+        logger.info("searched articles count : " + articleDAO.countSearchedArticles(searchCriteria));
+    }
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - ======================
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - 999 : 제목999
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - ======================
+    //= INFO : org.example.springMVC.article.ArticleDAOTest - searched articles count : 1
 
 }

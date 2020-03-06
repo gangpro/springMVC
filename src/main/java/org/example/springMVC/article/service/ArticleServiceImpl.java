@@ -3,6 +3,7 @@ package org.example.springMVC.article.service;
 import org.example.springMVC.article.dao.ArticleDAO;
 import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
+import org.example.springMVC.commons.paging.SearchCriteria;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -53,5 +54,17 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int countArticles(Criteria criteria) throws Exception {
         return articleDAO.countArticles(criteria);
+    }
+
+    // 검색된 목록
+    @Override
+    public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+        return articleDAO.listCriteria(searchCriteria);
+    }
+
+    // 검색된 게시글의 갯수
+    @Override
+    public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+        return articleDAO.countSearchedArticles(searchCriteria);
     }
 }

@@ -3,6 +3,7 @@ package org.example.springMVC.article.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
+import org.example.springMVC.commons.paging.SearchCriteria;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
@@ -70,6 +71,18 @@ public class ArticleDAOImpl implements ArticleDAO {
     @Override
     public int countArticles(Criteria criteria) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".countArticles", criteria);
+    }
+
+    // 검색된 목록 추상 메서드
+    @Override
+    public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listSearch", searchCriteria);
+    }
+
+    // 검색된 게시글의 갯수를 리턴하는 추상 메서드 선언
+    @Override
+    public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countSearchedArticles", searchCriteria);
     }
 
 

@@ -2,6 +2,7 @@ package org.example.springMVC.article.service;
 
 import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
+import org.example.springMVC.commons.paging.SearchCriteria;
 
 import java.util.List;
 // 인터페이스 생성 후 메서드 정의
@@ -28,4 +29,9 @@ public interface ArticleService {
     // 페이징 전체 게시글 갯수
     int countArticles(Criteria criteria) throws Exception;
 
+    // 검색된 목록
+    List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception;
+
+    // 검색된 게시글의 갯수
+    int countSearchedArticles(SearchCriteria searchCriteria) throws Exception;
 }
