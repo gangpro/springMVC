@@ -6,16 +6,18 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
-<%@include file="../../include/head.jsp" %>
+
+<%@ include file="../../include/head.jsp"%>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
+
 <div class="wrapper">
 
     <!-- Main Header -->
-    <%@include file="../../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp"%>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <%@include file="../../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp"%>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -34,9 +36,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main content -->
         <section class="content container-fluid">
 
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -52,12 +51,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <th style="width: 150px">작성시간</th>
                                 <th style="width: 60px">조회</th>
                             </tr>
-                            <c:forEach items="${article}" var="article">
+                            <c:forEach items="${articles}" var="article">
                                 <tr>
                                     <td>${article.articleNo}</td>
-                                    <td>
-                                        <a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a>
-                                    </td>
+                                    <td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>
                                     <td>${article.writer}</td>
                                     <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
                                     <td><span class="badge bg-red">${article.viewCnt}</span></td>
@@ -69,13 +66,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="box-footer">
                         <div class="pull-right">
                             <button type="button" class="btn btn-success btn-flat" id="writeBtn">
-                                <i class="fa fa-pencil"></i>글쓰기
+                                <i class="fa fa-pencil"></i> 글쓰기
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-
 
         </section>
         <!-- /.content -->
@@ -83,11 +79,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <%@include file="../../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp"%>
 
 </div>
 <!-- ./wrapper -->
-<%@include file="../../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp"%>
 <script>
     var result = "${msg}";
     if (result == "regSuccess") {

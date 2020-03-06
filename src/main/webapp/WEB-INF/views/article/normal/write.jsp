@@ -5,16 +5,18 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
-<%@include file="../../include/head.jsp" %>
+
+<%@ include file="../../include/head.jsp"%>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
+
 <div class="wrapper">
 
     <!-- Main Header -->
-    <%@include file="../../include/main_header.jsp" %>
+    <%@ include file="../../include/main_header.jsp"%>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <%@include file="../../include/left_column.jsp" %>
+    <%@ include file="../../include/left_column.jsp"%>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -33,9 +35,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main content -->
         <section class="content container-fluid">
 
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
             <div class="col-lg-12">
                 <form role="form" id="writeForm" method="post" action="${path}/article/write">
                     <div class="box box-primary">
@@ -58,16 +57,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button type="button" class="btn btn-primary"><i class="fa fa-list"></i>목록</button>
+                            <button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
                             <div class="pull-right">
-                                <button type="reset" class="btn btn-warning"><i class="fa fa-reply"></i>초기화</button>
-                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>저장</button>
+                                <button type="reset" class="btn btn-warning"><i class="fa fa-reply"></i> 초기화</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> 저장</button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-
 
         </section>
         <!-- /.content -->
@@ -75,10 +73,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <%@include file="../../include/main_footer.jsp" %>
+    <%@ include file="../../include/main_footer.jsp"%>
 
 </div>
 <!-- ./wrapper -->
-<%@include file="../../include/plugin_js.jsp" %>
+<%@ include file="../../include/plugin_js.jsp"%>
 </body>
 </html>
