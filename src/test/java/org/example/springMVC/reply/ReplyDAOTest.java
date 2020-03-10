@@ -1,5 +1,6 @@
 package org.example.springMVC.reply;
 
+import org.example.springMVC.commons.paging.Criteria;
 import org.example.springMVC.reply.dao.ReplyDAO;
 import org.example.springMVC.reply.vo.ReplyVO;
 
@@ -11,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-config/applicationContext.xml"})
@@ -21,6 +23,7 @@ public class ReplyDAOTest {
     @Inject
     private ReplyDAO replyDAO;
 
+    // 댓글 등록 테스트
     @Test
     public void testReplyCreate() throws Exception {
 
@@ -35,6 +38,7 @@ public class ReplyDAOTest {
 
     }
 
+    // 댓글 수정 테스트
     @Test
     public void testReplyUpdate() throws Exception {
         ReplyVO replyVO = new ReplyVO();
@@ -44,14 +48,30 @@ public class ReplyDAOTest {
         replyDAO.update(replyVO);
     }
 
+    // 댓글 삭제 테스트
     @Test
     public void testReplyDelete() throws Exception {
         replyDAO.delete(3);
     }
 
+    // 댓글 목록 테스트
     @Test
     public void testReplyList() throws Exception {
         logger.info(replyDAO.list(999).toString());
+    }
+
+    // 댓글 페이징 테스트
+    @Test
+    public void testReplyPaging() throws Exception {
+        Criteria criteria = new Criteria();
+        criteria.setPerPageNum(20);
+        criteria.setPage(1);
+
+        List<ReplyVO> replies = replyDAO.listPaging(999, criteria);
+
+        for(ReplyVO reply : replies) {
+            logger.info(reply.getReplyNo() + " : " + reply.getReplyText());
+        }
     }
 
 }
