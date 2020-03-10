@@ -10,6 +10,7 @@
 
     <typeAliases>
         <typeAlias type="org.example.springMVC.article.vo.ArticleVO" alias="ArticleVO" />
+        <typeAlias type="org.example.springMVC.reply.vo.ReplyVO" alias="ReplyVO" />
     </typeAliases>
 
 </configuration>
