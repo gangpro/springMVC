@@ -230,18 +230,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{/each}}
 </script>
 
-<script type="text/javascript" src="/resources/dist/js/reply.js"></script>
 <!-- 댓글 목록 JS 코드 -->
 <script>
     $(document).ready(function () {
 
-        var articleNo = "$article.articleNo}";  // 현재 게시글 번호
-        var replyPageNum = 1;                   // 댓글 페이지 번호 초기화
+        var articleNo = "${article.articleNo}";  // 현재 게시글 번호
+        var replyPageNum = 1;                    // 댓글 페이지 번호 초기화
 
         // 댓글 내용 : 줄바꿈/공백처리
         Handlebars.registerHelper("escape", function (replyText) {
             var text = Handlebars.Utils.escapeExpression(replyText);
-            text = text.replace(/(\r\n|\n|\r)gm, "<br/>");
+            text = text.replace(/(\r\n|\n|\r)/gm, "<br/>");
             text = text.replace(/( )/gm, "&nbsp;");
 
             return new Handlebars.SafeString(text);
@@ -257,7 +256,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             var minutes = dateObj.getMinutes();
 
             // 2자리 숫자로 변환
-            momth < 10 ? month = '0' + month : month;
+            month < 10 ? month = '0' + month : month;
             date < 10 ? date = '0' + date : date;
             hours < 10 ? hours = '0' + hours : hours;
             minutes < 10 ? minutes = '0' + minutes : minutes;
@@ -422,6 +421,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             });
         });
     });
+
+    <%--var formObj = ${"form[role='form']"};--%>
+    <%--console.log(formObj);--%>
 
 </script>
 
