@@ -118,6 +118,12 @@
     var articleNo = 999;
     // alert(articleNo);
 
+    // 목록 페이지 번호 변수 선언, 1로 초기화(첫번째 페이지)
+    var replyPageNum = 1;
+
+    // 목록 페이지 호출
+    getRepliesPaging(replyPageNum);
+
     // 댓글 목록 출력 함수
     function getReplies() {
         $.getJSON("/replies/all/" + articleNo, function (data) {
@@ -137,8 +143,9 @@
         });
     }
 
+    // 댓글 목록 페이징 처리 후 주석 처리
     // 댓글 목록 호출
-    getReplies();
+    // getReplies();
 
     // 댓글 저장 버튼 클릭 이벤트 발생시
     $("#replyAddBtn").on("click", function () {
@@ -169,7 +176,8 @@
                     alert("댓글 등록 완료!");
                 }
 
-                getReplies();        // 댓글 목록 출력 함수 호출
+                // getReplies();        // 댓글 목록 출력 함수 호출
+                getRepliesPaging(replyPageNum); // 목록 페이지 호출
                 replyText.val("");   // 댓글 내용 초기화
                 replyWriter.val(""); // 댓글 작성자 초기화
             }
@@ -214,7 +222,8 @@
                 if (result == "modSuccess") {
                     alert("댓글 수정 완료!");
                     $("#modifyModal").modal("hide");    // Modal 닫기
-                    getReplies();   // 댓글 목록 갱신
+                    // getReplies();   // 댓글 목록 갱신
+                    getRepliesPaging(replyPageNum); // 목록 페이지 호출
                 }
             }
         });
@@ -240,10 +249,65 @@
                 if (result == "delSuccess") {
                     alert("댓글 삭제 완료!");
                     $("#modifyModal").modal("hide");    // Modal 닫기
-                    getReplies();   // 댓글 목록 갱신
+                    // getReplies();   // 댓글 목록 갱신
+                    getRepliesPaging(replyPageNum); // 목록 페이지 호출
+
                 }
             }
         });
+    });
+
+    // 댓글 목록 페이징 함수
+    function getRepliesPaging(page) {
+
+        $.getJSON("/replies/" + articleNo + "/" + page, function (data) {
+            console.log(data);
+
+            var str = "";
+
+            $(data.replies).each(function () {
+                str += "<li data-replyNo='" + this.replyNo + "' class='replyLi'>"
+                    +  "<p class='replyText'>" + this.replyText + "</p>"
+                    +  "<p class='replyWriter'>" + this.replyWriter + "</p>"
+                    +  "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                    +  "</li>"
+                    +  "<hr/>";
+            });
+
+            $("#replies").html(str);
+
+            // 페이지 번호 출력 호출
+            printPageNumbers(data.pageMaker);
+        });
+    }
+
+    // 댓글 목록 페이지 번호 출력 함수
+    function printPageNumbers(pageMaker) {
+
+        var str = "";
+
+        // 이전 버튼 활성화
+        if (pageMaker.prev) {
+            str += "<li><a href='"+(pageMaker.startPage-1)+"'>이전</a></li>";
+        }
+        // 페이지 번호
+        for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+            var strCalss = pageMaker.criteria.page == i ? 'class=active' : '';
+            str += "<li "+strCalss+"><a href='"+i+"'>"+i+"</a></li>";
+        }
+        // 다음 버튼 활성화
+        if (pageMaker.next) {
+            str += "<li><a href='"+(pageMaker.endPage + 1)+"'>다음</a></li>";
+        }
+
+        $(".pagination-sm").html(str);
+    }
+
+    // 목록 페이지 번호 클릭 이벤트
+    $(".pagination").on("click", "li a", function (event) {
+        event.preventDefault();
+        replyPageNum = $(this).attr("href");    // 목록 페이지 번호 추출
+        getRepliesPaging(replyPageNum);         // 목록 페이지 호출
     });
 
 </script>
