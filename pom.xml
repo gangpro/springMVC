@@ -89,6 +89,21 @@
             <version>1.16</version>
         </dependency>
 
+        <!--JSON : jackson-databind 라이브러리-->
+        <!-- 댓글 반환시 필요 -->
+        <!-- No converter found for return value of type: class java.util.ArrayList 에러 떠서 추가 함 -->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
         <!-- AspectJ -->
         <dependency>
             <groupId>org.aspectj</groupId>
