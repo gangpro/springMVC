@@ -113,10 +113,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="box-footer">
                             <div class="text-center">
                                 <ul class="pagination pagination-sm no-margin">
-
                                 </ul>
                             </div>
                         </div>
+
+                        <!--댓글 수정 modal 영역-->
+                        <div class="modal fade" id="modModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">댓글수정</h4>
+                                    </div>
+                                    <div class="modal-body" data-rno>
+                                        <input type="hidden" class="replyNo"/>
+                                        <%--<input type="text" id="replytext" class="form-control"/>--%>
+                                        <textarea class="form-control" id="replyText" rows="3" style="resize: none"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-primary modalModBtn">수정</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--댓글 삭제 modal 영역-->
+                        <div class="modal fade" id="delModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">댓글 삭제</h4>
+                                        <input type="hidden" class="rno"/>
+                                    </div>
+                                    <div class="modal-body" data-rno>
+                                        <p>댓글을 삭제하시겠습니까?</p>
+                                        <input type="hidden" class="rno"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">아니요.
+                                        </button>
+                                        <button type="button" class="btn btn-primary modalDelBtn">네. 삭제합니다.</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -315,6 +360,63 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
                         replyTextObj.val("");   // 댓글 입력창 공백처리
                         replyWriterObj.val("");   // 댓글 입력창 공백처리
+                    }
+                }
+            });
+        });
+
+        // 댓글 수정을 위해 modal창에 선택한 댓글의 값들을 세팅
+        $(".repliesDiv").on("click", ".replyDiv", function (event) {
+            var reply = $(this);
+
+            $(".replyNo").val(reply.attr("data-replyNo"));
+            $("#replyText").val(reply.find(".oldReplyText").text());
+        });
+
+        // modal 창의 댓글 수정버튼 클릭 이벤트
+        $(".modalModBtn").on("click", function () {
+            var replyNo = $(".replyNo").val();
+            var replyText = $("#replyText").val();
+
+            $.ajax({
+                type : "put",
+                url : "/replies/" + replyNo,
+                headers : {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "PUT"
+                },
+                dataType : "text",
+                data: JSON.stringify({
+                    replyText : replyText
+                }),
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result == "modSuccess") {
+                        alert("댓글이 수정되었습니다.");
+                        getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
+                        $("#modModal").modal("hide"); // modal 창 닫기
+                    }
+                }
+            })
+        });
+
+        // modal 창의 댓글 삭제 버튼 클릭 이벤트
+        $(".modalDelBtn").on("click", function () {
+            var replyNo = $(".replyNo").val();
+            $.ajax({
+                type: "delete",
+                url: "/replies/" + replyNo,
+                headers: {
+                    "Content-Type" : "application/json",
+                    "X-HTTP-Method-Override" : "DELETE"
+                },
+                dataType: "text",
+                success: function (result) {
+                    console.log("result : " + result);
+                    if (result == "delSuccess") {
+                        alert("댓글이 삭제되었습니다.");
+                        getReplies("/replies/" + articleNo + "/" + replyPageNum); // 댓글 목록 호출
+                        $("#delModal").modal("hide"); // modal 창 닫기
                     }
                 }
             });
