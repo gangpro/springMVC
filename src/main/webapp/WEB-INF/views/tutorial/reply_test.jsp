@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </div>
-
+            <!-- 댓글 수정/삭제 Modal 영역 -->
             <div class="modal fade" id="modifyModal" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -172,6 +172,76 @@
                 getReplies();        // 댓글 목록 출력 함수 호출
                 replyText.val("");   // 댓글 내용 초기화
                 replyWriter.val(""); // 댓글 작성자 초기화
+            }
+        });
+    });
+
+    // 댓글 수정 삭제 관련
+    // 댓글의 값들 세팅
+    $("#replies").on("click", ".replyLi button", function () {
+
+        var reply = $(this).parent();
+        var replyNo = reply.attr("data-replyNo");
+        var replyText = reply.find(".replyText").text();
+        var replyWriter = reply.find(".replyWriter").text();
+
+        $("#replyNo").val(replyNo);
+        $("#replyText").val(replyText);
+        $("#replyWriter").val(replyWriter);
+    });
+
+    // 댓글 수정 호출하기
+    $(".modalModBtn").on("click", function () {
+
+        var reply = $(this).parent().parent();          // 댓글 선택자
+        var replyNo = reply.find("#replyNo").val();     // 댓글 번호
+        var replyText = reply.find("#replyText").val(); // 수정한 댓글 내용
+
+        // AJAX 통신 : PUT
+        $.ajax({
+            type : "put",
+            url : "/replies/" + replyNo,
+            headers : {
+                "Content-type" : "application/json",
+                "X-HTTP-Method-Override" : "PUT"
+            },
+            data : JSON.stringify(
+                {replyText : replyText}
+            ),
+            dataType : "text",
+            success : function (result) {
+                console.log("result : " + result);
+                if (result == "modSuccess") {
+                    alert("댓글 수정 완료!");
+                    $("#modifyModal").modal("hide");    // Modal 닫기
+                    getReplies();   // 댓글 목록 갱신
+                }
+            }
+        });
+    });
+
+    // 댓글 삭제 호출하기
+    $(".modalDelBtn").on("click", function () {
+
+        // 댓글 번호
+        var replyNo = $(this).parent().parent().find("#replyNo").val();
+
+        // AJAX 통신 : DELETE
+        $.ajax({
+            type : "delete",
+            url : "/replies/" + replyNo,
+            headers : {
+                "Content-type" : "application/json",
+                "X-HTTP-Method-Override" : "DELETE"
+            },
+            dataType : "text",
+            success : function (result) {
+                console.log("result : " + result);
+                if (result == "delSuccess") {
+                    alert("댓글 삭제 완료!");
+                    $("#modifyModal").modal("hide");    // Modal 닫기
+                    getReplies();   // 댓글 목록 갱신
+                }
             }
         });
     });
