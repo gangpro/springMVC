@@ -6,17 +6,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 
-<%@ include file="../../include/head.jsp"%>
+<%@ include file="../../include/head.jsp" %>
 
 <body class="hold-transition skin-blue sidebar-mini layout-boxed">
 
 <div class="wrapper">
 
     <!-- Main Header -->
-    <%@ include file="../../include/main_header.jsp"%>
+    <%@ include file="../../include/main_header.jsp" %>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <%@ include file="../../include/left_column.jsp"%>
+    <%@ include file="../../include/left_column.jsp" %>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -49,7 +49,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <span class="username">
                                 <a href="#">${article.writer}</a>
                             </span>
-                            <span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm" value="${article.regDate}"/></span>
+                            <span class="description"><fmt:formatDate pattern="yyyy-MM-dd a HH:mm"
+                                                                      value="${article.regDate}"/></span>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -66,6 +67,57 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <button type="submit" class="btn btn-danger delBtn"><i class="fa fa-trash"></i> 삭제</button>
                         </div>
                     </div>
+                    <!-- 댓글 입력 영역 -->
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <a class="link-black text-lg"><i class="fa fa-pencil"></i> 댓글 작성</a>
+                        </div>
+                        <div class="box-body">
+                            <form class="form-horizontal">
+                                <div class="form-group margin">
+                                    <div class="col-sm-10">
+                                    <textarea class="form-control" id="newReplyText" rows="3" placeholder="댓글 내용..."
+                                              style="resize: none"></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input class="form-control" id="newReplyWriter" type="text"
+                                               placeholder="댓글 작성자">
+                                    </div>
+                                    <hr/>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-default btn-block replyAddBtn">
+                                            <i class="fa fa-save"></i> 댓글 저장
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 댓글 목록/페이지 영역 -->
+                    <div class="box box-success collapsed-box">
+                        <!--댓글 유무 / 댓글 갯수 / 댓글 펼치기, 접기-->
+                        <div class="box-header with-border">
+                            <a class="link-black text-lg"><i class="fa fa-comments-o margin-r-5 replyCount"></i> </a>
+                            <div class="box-tools">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!--댓글 목록-->
+                        <div class="box-body repliesDiv">
+                        </div>
+
+                        <!--댓글 페이징-->
+                        <div class="box-footer">
+                            <div class="text-center">
+                                <ul class="pagination pagination-sm no-margin">
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -75,11 +127,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <%@ include file="../../include/main_footer.jsp"%>
+    <%@ include file="../../include/main_footer.jsp" %>
 
 </div>
 <!-- ./wrapper -->
-<%@ include file="../../include/plugin_js.jsp"%>
+<%@ include file="../../include/plugin_js.jsp" %>
 <script>
     $(document).ready(function () {
         var formObj = $("form[role='form']");
