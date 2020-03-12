@@ -37,4 +37,7 @@ public interface ArticleDAO {
 
     // 검색된 게시글의 갯수를 리턴하는 추상 메서드 선언
     int countSearchedArticles(SearchCriteria searchCriteria) throws Exception;
+
+    // 게시글의 댓글에 따른 트랜잭션 처리
+    void updateReplyCnt(Integer articleNo, int amount) throws Exception;
 }

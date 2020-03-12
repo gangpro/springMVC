@@ -64,6 +64,7 @@ public class ReplyDAOImpl implements ReplyDAO {
         return sqlSession.selectOne(NAMESPACE + ".countReplies", articleNo);
     }
 
+    // 게시글의 댓글에 따른 트랜잭션 처리
     @Override
     public int getArticleNo(Integer replyNo) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".getArticleNo", replyNo);

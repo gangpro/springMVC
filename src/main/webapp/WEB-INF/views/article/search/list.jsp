@@ -62,6 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </td>
                                     <td>${article.writer}</td>
                                     <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
+                                    <td><span class="badge bg-teal"><i class="fa fa-file"></i> ${article.replyCnt}</span></td>
                                     <td><span class="badge bg-red">${article.viewCnt}</span></td>
                                 </tr>
                             </c:forEach>
