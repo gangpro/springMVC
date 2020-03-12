@@ -5,6 +5,8 @@ import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
 import org.example.springMVC.commons.paging.SearchCriteria;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -20,21 +22,26 @@ public class ArticleServiceImpl implements ArticleService {
         this.articleDAO = articleDAO;
     }
 
+    @Transactional
     @Override
     public void create(ArticleVO articleVO) throws Exception {
         articleDAO.create(articleVO);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ArticleVO read(Integer articleNo) throws Exception {
+        articleDAO.updateViewCnt(articleNo);
         return articleDAO.read(articleNo);
     }
 
+    @Transactional
     @Override
     public void update(ArticleVO articleVO) throws Exception {
         articleDAO.update(articleVO);
     }
 
+    @Transactional
     @Override
     public void delete(Integer articleNo) throws Exception {
         articleDAO.delete(articleNo);

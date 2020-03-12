@@ -40,4 +40,7 @@ public interface ArticleDAO {
 
     // 게시글의 댓글에 따른 트랜잭션 처리
     void updateReplyCnt(Integer articleNo, int amount) throws Exception;
+
+    // 게시글의 조회에 따른 트랜재션 처리
+    void updateViewCnt(Integer articleNo) throws Exception;
 }

@@ -5,6 +5,8 @@ import org.example.springMVC.article.vo.ArticleVO;
 import org.example.springMVC.commons.paging.Criteria;
 import org.example.springMVC.commons.paging.SearchCriteria;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -20,9 +22,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 
     private final SqlSession sqlSession;
 
+    private final ArticleDAO articleDAO;       // 게시글 비즈니스 계층의 수정 및 트랜잭션 적용
+
+
     @Inject
-    public ArticleDAOImpl(SqlSession sqlSession) {
+    public ArticleDAOImpl(SqlSession sqlSession, ArticleDAO articleDAO) {
         this.sqlSession = sqlSession;
+        this.articleDAO = articleDAO;   // 게시글 비즈니스 계층의 수정 및 트랜잭션 적용
     }
 
     @Override
@@ -30,9 +36,11 @@ public class ArticleDAOImpl implements ArticleDAO {
         sqlSession.insert(NAMESPACE + ".create", articleVO);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)   // 게시글 비즈니스 계층의 수정 및 트랜잭션 적용
     @Override
     public ArticleVO read(Integer articleNo) throws Exception {
-        return sqlSession.selectOne(NAMESPACE + ".read", articleNo);
+        articleDAO.updateViewCnt(articleNo);
+        return articleDAO.read(articleNo);
     }
 
     @Override
@@ -95,6 +103,12 @@ public class ArticleDAOImpl implements ArticleDAO {
         paramMap.put("amount", amount);
 
         sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
+    }
+
+    // 게시글의 조회에 따른 트랜재션 처리
+    @Override
+    public void updateViewCnt(Integer articleNo) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateViewCnt", articleNo);
     }
 
 
